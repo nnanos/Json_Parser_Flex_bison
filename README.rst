@@ -1,92 +1,51 @@
 =======================================================================
-Text Proccessing with SED and AWK tools
+Json Parser with FLEX and BISON tools
 =======================================================================
 
 Description
 ============
 
-This repository contains a BASH shell script that I implemented to manage a user log file
-events (log files) for navigating social networks on the Internet. The file event.dat contains 9500 records and each one contains elements according to
-the following wording and formatting:
-
-  **id|lastName|firstName|gender|birthday|joinDate|IP|browserUsed|socialmedia**
-
-
-
-The script tools.sh support the following functionallities:
-                    
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file>
-
-                 Displays the entire contents of the file, without the comment lines that should
-                 have been ignored.
-              
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file> -id <id>
-
-                 Displays the first name, last name, and date of birth of the user with the given one
-                 id, separated by a single space.
+This repository contains an implementation of a Json Parser. 
+Json files are well known and used in a variety of applications.
+These files have a specific format which is described **here**.
+The parser implemented here is accomplished with the help of some old but good tools **flex** and **bison**.
+Json format can be described by the below BNF syntactic definition of the grammar of the language. ::
 
 
-              #. Execution of the command: ::
-
-                     ./tool.sh --firstnames -f <file>
-
-                 Displays all distinct first names (firstname field) contained in the file,
-                 in alphabetical order.
-
-
-              #. Execution of the command: ::
-
-                     ./tool.sh --lastnames -f <file>
-                    
-                 Displays all distinct first names (lasttname field) contained in the file,
-                 in alphabetical order.
+<programme> ::= <array> | <object>
+<array> ::= “[]” | “[” <elements> “]”
+<elements> ::= <value> | <value> “,” <elements>
+<object> ::= “{}” | “{” <members> “}”
+<members> ::= <pair> | <pair> “,” <members>
+<pair> ::= STRING “:” <value>
+<value> ::= STRING | NUMBER | <objetct> | <array> | “true” | “false” | “null”
 
 
-              #. Execution of the command: ::
-
-                     ./tool.sh --born-since <dateA> --born-until <dateB> -f <file>
-                     
-                 Displays only the rows that correspond to users born from
-                 date dateA to date dateB. Either can be given, eg, to display all users born on a day or                         later, or born until some day. For each user that meets the criteria, be displayed
-                 the line exactly as it was in the file. 
+  **Note**: STRING and NUMBER are tokens that meet certain specifications
+  (regular expressions) and which have been produced by the lectical analyzer (flex). The same applies
+  for the rest of the terminal symbols which have been enclosed in double quotation marks.
 
 
+So the parser with one pass of the input checks: 
 
 
-              #. Execution of the command: ::
+#.
 
-                     ./tool.sh --socialmedia -f <file>
-                     
-                 Displays all social media (social media) used by
-                 users, in alphabetical order, and next to each and every social network name
-                 will display the number of users who used it.
-
-
-
-
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file> --edit <id> <column> <value>
-                     
-                 Modifys the file. Specifically, for the user with code <id>, it will replace the
-                 column <column> with value <value>. If there is no user with this id, or
-                 column is not among the accepted columns 2 through 8 (column 1 corresponding to the same
-                 id is not allowed to change), this command will not change anything. Beyond the
-                 requested change, nothing else should be changed, i.e. it should
-                 the original sorting of records including comments is preserved.
-
-
+#.
 
 
 
 ============
-
-Testing the Tool
+Usage
 =============
+
+*SETUP
+
+
+
+
+*EXAPLES
+
 
 I now present some examples of execution.
 
