@@ -29,10 +29,24 @@ Json format can be described by the below BNF syntactic definition of the gramma
 So the parser with one pass of the input checks: 
 
 
-#.
+ #. If the input is a syntactically correct json (satisfiying the above BNF grammar).
 
-#.
+ #. If the input meets the bellow requierements.
 
+ * The “text” element should be up to 140 characters.
+
+ * The “user” element should contain a unique “id” as a positive
+   integer, and “name”, “screen_name”, “location” as alphanumeric.
+
+ * The “created_at” element should be in the format “Day_name MMM DD
+   XX:XX:XX YYYY” where Day_name = Monday, Tuesday, etc., M = Month,
+   D = Day, XX:XX:XX the timestamp format and Y = Year. For the timestamp
+   make sure that a reasonable result is obtained ( hours 0 to 23 , minutes and
+   seconds from 0 to 60 ).
+
+ * The “id_str” element should be alphanumeric and UNIQUE,
+   however contain only one positive integer, e.g. “19487012”,
+   "8623490". 
 
 
 ============
