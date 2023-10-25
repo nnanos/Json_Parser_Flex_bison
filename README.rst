@@ -72,7 +72,8 @@ Usage
 	  ./compile_script.sh
 	
 	
-	* EXAMPLES
+Examples
+=============
 	
 	Every example that I present here can be reproduced because I provide all the files in this repository.
 	
@@ -81,40 +82,76 @@ Usage
 	    ./parser "/Path/to/image/GOOD_json.txt"
 	 
 	   
-	  The output of the parser is as expected the syntactically correct json file that used as the input and can be shown bellow. 
+	  The output of the parser is as expected the syntactically correct json file that used as the input and 	  can be shown bellow. 
  
 
-.. image: GOOD_JSON.png
+	  .. image:: /Files_to_check_and_Images/json_structure_check/GOOD_JSON.png
+
 
    
-  If I modify the GOOD_json.txt so that it doesnt have one double quote in line 3 (tittle field) then the output is:
+	  
+	  If I modify the GOOD_json.txt so that it doesnt have one double quote in line 3 (tittle field) then 		  the output is:
   
 
-.. image: BAD_JSON.png
- 
- 
-    Now we see that the output is an error message and not just the input file as before.
+	  .. image:: /Files_to_check_and_Images/json_structure_check/BAD_json.png
 
 
-	* Checking the **Text_field**
+	  We see that the output is an error message and not just the input file as before.
 
 
-	* Checking the **created_at_field**
+* Now I give examples to see if all the other requierements about the fields are satisfied.
 
-
-	* Checking the **id_str_field**
-
-
-	* Checking the **user_field**
+	
+		* Checking the **Text_field**
 
 
 
-	I now present some examples of execution.
+  .. image:: /Files_to_check_and_Images/Text_field_check/text_field_check.png
+
+
+  .. image:: /Files_to_check_and_Images/Text_field_check/text_field_check_False.png
 
 
 
 
-============
+		* Checking the **created_at_field**
+
+
+
+  .. image:: /Files_to_check_and_Images/created_at_field_check/created_at_field_check.png
+
+
+  .. image:: /Files_to_check_and_Images/created_at_field_check/created_at_field_check_False.png
+
+
+
+
+		* Checking the **id_str_field**
+
+
+
+  .. image:: /Files_to_check_and_Images/id_str_field_check/id_str_field_check.png
+
+
+  .. image:: /Files_to_check_and_Images/id_str_field_check/id_str_field_check.png
+
+
+
+	
+		* Checking the **user_field**
+
+
+
+  .. image:: /Files_to_check_and_Images/user_field_check/user_field_check.png
+
+
+  .. image:: /Files_to_check_and_Images/user_field_check/user_field_check_False.png
+
+
+
+	
+
+	  
 
 Free software: MIT license
 ============
