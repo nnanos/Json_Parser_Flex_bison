@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "generate flex and bison c files",
+            "type": "shell",
+            "command": "flex -d Scanner.l && bison -t -g -d json_parser.y && gcc -g lex.yy.c json_parser.tab.c -o parser",
+            "group": "build",
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ],
+    //"preLaunchTask": "generate flex and bison c files"
+}
+

@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Flex/Bison",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/home/nnanos/Desktop/Αρχές -20230128T115047Z-001/Αρχές /Mine/Mandatory_files/parser",
+      "args": [
+        "id_str_field_check.txt"
+      ],
+      "stopAtEntry": false,
+      "cwd": "/home/nnanos/Desktop/Αρχές -20230128T115047Z-001/Αρχές /Mine/Mandatory_files",
+      "preLaunchTask": "generate flex and bison c files"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/home/nnanos/Desktop/Αρχές -20230128T115047Z-001/Αρχές /Mine/Mandatory_files",
+      "program": "/home/nnanos/Desktop/Αρχές -20230128T115047Z-001/Αρχές /Mine/Mandatory_files/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
