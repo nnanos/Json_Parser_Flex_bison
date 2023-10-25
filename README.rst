@@ -1,172 +1,103 @@
 =======================================================================
-Text Proccessing with SED and AWK tools
+Json Parser with FLEX and BISON tools
 =======================================================================
 
 Description
 ============
 
-This repository contains a BASH shell script that I implemented to manage a user log file
-events (log files) for navigating social networks on the Internet. The file event.dat contains 9500 records and each one contains elements according to
-the following wording and formatting:
-
-  **id|lastName|firstName|gender|birthday|joinDate|IP|browserUsed|socialmedia**
-
-
-
-The script tools.sh support the following functionallities:
-                    
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file>
-
-                 Displays the entire contents of the file, without the comment lines that should
-                 have been ignored.
-              
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file> -id <id>
-
-                 Displays the first name, last name, and date of birth of the user with the given one
-                 id, separated by a single space.
+This repository contains an implementation of a Json Parser. 
+Json files are well known and used in a variety of applications.
+These files have a specific format which is described **here**.
+The parser implemented here is accomplished with the help of some old but good tools **flex** and **bison**.
+Json format can be described by the below BNF syntactic definition of the grammar of the language. ::
 
 
-              #. Execution of the command: ::
+<programme> ::= <array> | <object>
+<array> ::= “[]” | “[” <elements> “]”
+<elements> ::= <value> | <value> “,” <elements>
+<object> ::= “{}” | “{” <members> “}”
+<members> ::= <pair> | <pair> “,” <members>
+<pair> ::= STRING “:” <value>
+<value> ::= STRING | NUMBER | <objetct> | <array> | “true” | “false” | “null”
 
-                     ./tool.sh --firstnames -f <file>
-
-                 Displays all distinct first names (firstname field) contained in the file,
-                 in alphabetical order.
-
-
-              #. Execution of the command: ::
-
-                     ./tool.sh --lastnames -f <file>
-                    
-                 Displays all distinct first names (lasttname field) contained in the file,
-                 in alphabetical order.
+ 
+ **Note**: STRING and NUMBER are tokens that meet certain specifications
+ (regular expressions) and which have been produced by the lectical analyzer (flex). The same applies
+ for the rest of the terminal symbols which have been enclosed in double quotation marks.
 
 
-              #. Execution of the command: ::
+So the parser with one pass of the input checks: 
 
-                     ./tool.sh --born-since <dateA> --born-until <dateB> -f <file>
-                     
-                 Displays only the rows that correspond to users born from
-                 date dateA to date dateB. Either can be given, eg, to display all users born on a day or                         later, or born until some day. For each user that meets the criteria, be displayed
-                 the line exactly as it was in the file. 
+
+#. If the input is a syntactically correct json (satisfiying the above BNF grammar).
+
+#. If the input meets the bellow requierements.
+
+  * The “text” element should be up to 140 characters.
+ 
+  * The “user” element should contain a unique “id” as a positive
+    integer, and “name”, “screen_name”, “location” as alphanumeric.
+ 
+  * The “created_at” element should be in the format “Day_name MMM DD
+    XX:XX:XX YYYY” where Day_name = Monday, Tuesday, etc., M = Month,
+    D = Day, XX:XX:XX the timestamp format and Y = Year. For the timestamp
+    make sure that a reasonable result is obtained ( hours 0 to 23 , minutes and
+    seconds from 0 to 60 ).
+ 
+  * The “id_str” element should be alphanumeric and UNIQUE,
+    however contain only one positive integer, e.g. “19487012”,
+    "8623490". 
 
 
 
-
-              #. Execution of the command: ::
-
-                     ./tool.sh --socialmedia -f <file>
-                     
-                 Displays all social media (social media) used by
-                 users, in alphabetical order, and next to each and every social network name
-                 will display the number of users who used it.
-
-
-
-
-              #. Execution of the command: ::
-
-                     ./tool.sh -f <file> --edit <id> <column> <value>
-                     
-                 Modifys the file. Specifically, for the user with code <id>, it will replace the
-                 column <column> with value <value>. If there is no user with this id, or
-                 column is not among the accepted columns 2 through 8 (column 1 corresponding to the same
-                 id is not allowed to change), this command will not change anything. Beyond the
-                 requested change, nothing else should be changed, i.e. it should
-                 the original sorting of records including comments is preserved.
-
-
-
-
-
-============
-
-Testing the Tool
+Usage
 =============
 
-I now present some examples of execution.
+* SETUP
 
-
-              * Execution of the command: ::
-
-                    ./tool.sh -f event.dat
-
-
-                .. image:: /Images/1.png
-
-                As you can see the desired functionality is achieved. The whole file as it is gets displayed.
-              
-              
-              * Execution of the command: ::
-
-                     ./tool.sh -f event.dat -id 1099511629352
-
-                .. image:: /Images/2.png
-
-                As you can see the desired functionality is achieved. The first name, last name, and date of birth of the user with the given id is displayed.
-
-              
-              * Execution of the command: ::
-
-                     ./tool.sh --firstnames -f event.dat | head
-
-                .. image:: /Images/3.png
-
-                As you can see the desired functionality is achieved. All distinct first names (firstname field) contained in the file got displayed
-                in alphabetical order. I just used head to print only the first few.
-
-
-              * Execution of the command: ::
-
-                     ./tool.sh --lastnames -f event.dat | head
-
-                .. image:: /Images/4.png
-
-                
-                As you can see the desired functionality is achieved. All distinct Last names (Lastname field) contained in the file got displayed
-                in alphabetical order. I just used head to print only the first few.
+Firstly to use the parser you have to execute the following commands. ::
   
-
-              * Execution of the command: ::
-
-                     ./tool.sh --born-since 1989-12-03 --born-until 1990-01-09 -f event.dat | head
-
-                .. image:: /Images/5.png
+  flex Scanner.l
+  bison -d -g -t json_parser.y
+  gcc -g lex.yy.c json_parser.tab.c -o parser
 
 
-                As you can see the desired functionality is achieved. It prints only the rows that correspond to users born from
-                date 1989-12-03 to date 1990-01-09.
+These commands compile the flex and bison files and generates the parser executable.
 
 
 
-              * Execution of the command: ::
-
-                     ./tool.sh --socialmedia -f event.dat
-
-                .. image:: /Images/6.png
-
-
-                As you can see the desired functionality is achieved. The script 
-                displays all social media used by users, in alphabetical order and its corresponding 
-                number of users from the file that use it. 
+Equivalently you can execute the script compile_script.sh (which just contains the above commands). ::
+  
+  chmod +x compile_script.sh
+  ./compile_script.sh
 
 
+* EXAMPLES
 
-              * Execution of the command: ::
+Every example that I present here can be reproduced because I provide all the files in this repository.
 
-                     ./tool.sh -f event.dat --edit 1099511629352 firstName NUNEZ
+ * I run the parser to check that a random json that I found `here <https://json.org/example.html`_ is a syntactically correct json file. ::
+ 
+    ./parser "/Path/to/image/GOOD_json.txt"
+ 
+   
+  The output of the parser is as expected the syntactically correct json file that used as the input and can be shown bellow. 
+ 
+  .. image : GOOD_JSON.png
+   
+    If I modify the GOOD_json.txt so that it doesnt have one double quote in line 3 (tittle field) then the output is:
+  
+  .. image : BAD_JSON.png
+ 
+    Now we see that the output is just an error message and not just the input file as before.
 
 
-                .. image:: /Images/7.png
 
 
-                As you can see the desired functionality is achieved. The script
-                modifys the file for the user with code 1099511629352. It replaces the
-                column **firstName** with value **NUNEZ**. 
+
+	I now present some examples of execution.
+
+
 
 
 ============
