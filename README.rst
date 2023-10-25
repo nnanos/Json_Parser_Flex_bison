@@ -53,45 +53,59 @@ So the parser with one pass of the input checks:
 Usage
 =============
 
-* SETUP
-
-Firstly to use the parser you have to execute the following commands. ::
-  
-  flex Scanner.l
-  bison -d -g -t json_parser.y
-  gcc -g lex.yy.c json_parser.tab.c -o parser
-
-
-These commands compile the flex and bison files and generates the parser executable.
-
-
-
-Equivalently you can execute the script compile_script.sh (which just contains the above commands). ::
-  
-  chmod +x compile_script.sh
-  ./compile_script.sh
-
-
-* EXAMPLES
-
-Every example that I present here can be reproduced because I provide all the files in this repository.
-
- * I run the parser to check that a random json that I found `here <https://json.org/example.html`_ is a syntactically correct json file. ::
+	* SETUP
+	
+	Firstly to use the parser you have to execute the following commands. ::
+	  
+	  flex Scanner.l
+	  bison -d -g -t json_parser.y
+	  gcc -g lex.yy.c json_parser.tab.c -o parser
+	
+	
+	These commands compile the flex and bison files and generates the parser executable.
+	
+	
+	
+	Equivalently you can execute the script compile_script.sh (which just contains the above commands). ::
+	  
+	  chmod +x compile_script.sh
+	  ./compile_script.sh
+	
+	
+	* EXAMPLES
+	
+	Every example that I present here can be reproduced because I provide all the files in this repository.
+	
+	 * I run the parser to check that a random json that I found `here <https://json.org/example.html`_ is a syntactically correct json file. ::
+	 
+	    ./parser "/Path/to/image/GOOD_json.txt"
+	 
+	   
+	  The output of the parser is as expected the syntactically correct json file that used as the input and can be shown bellow. 
  
-    ./parser "/Path/to/image/GOOD_json.txt"
- 
+
+.. image: GOOD_JSON.png
+
    
-  The output of the parser is as expected the syntactically correct json file that used as the input and can be shown bellow. 
- 
-  .. image : GOOD_JSON.png
-   
-    If I modify the GOOD_json.txt so that it doesnt have one double quote in line 3 (tittle field) then the output is:
+  If I modify the GOOD_json.txt so that it doesnt have one double quote in line 3 (tittle field) then the output is:
   
-  .. image : BAD_JSON.png
+
+.. image: BAD_JSON.png
  
-    Now we see that the output is just an error message and not just the input file as before.
+ 
+    Now we see that the output is an error message and not just the input file as before.
 
 
+	* Checking the **Text_field**
+
+
+	* Checking the **created_at_field**
+
+
+	* Checking the **id_str_field**
+
+
+	* Checking the **user_field**
 
 
 
